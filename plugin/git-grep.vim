@@ -6,6 +6,7 @@ function! GitGrep(args)
     execute "silent! grep " . a:args
     botright copen
     let &grepprg=grepprg_bak
+    let b:GitGrepWindow = 1
     exec "redraw!"
 endfunction
 
@@ -15,6 +16,7 @@ function! GitGrepAdd(args)
     execute "silent! grepadd " . a:args
     botright copen
     let &grepprg=grepprg_bak
+    let b:GitGrepWindow = 1
     exec "redraw!"
 endfunction
 
@@ -24,6 +26,7 @@ function! LGitGrep(args)
     execute "silent! lgrep " . a:args
     botright lopen
     let &grepprg=grepprg_bak
+    let b:GitGrepWindow = 1
     exec "redraw!"
 endfunction
 
@@ -33,6 +36,7 @@ function! LGitGrepAdd(args)
     execute "silent! lgrepadd " . a:args
     botright lopen
     let &grepprg=grepprg_bak
+    let b:GitGrepWindow = 1
     exec "redraw!"
 endfunction
 
@@ -40,3 +44,5 @@ command! -nargs=* -complete=file GitGrep call GitGrep(<q-args>)
 command! -nargs=* -complete=file GitGrepAdd call GitGrepAdd(<q-args>)
 command! -nargs=* -complete=file LGitGrep call LGitGrep(<q-args>)
 command! -nargs=* -complete=file LGitGrepAdd call LGitGrepAdd(<q-args>)
+
+autocmd bufenter * if (winnr("$") == 1 && exists("b:GitGrepWindow")) | q | endif
